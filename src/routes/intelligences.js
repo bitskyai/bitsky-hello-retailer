@@ -1,69 +1,8 @@
-const express = require("express");
-const axios = require("axios");
+const router = require("express").Router();
 const cheerio = require("cheerio");
 const fs = require("fs");
-const router = express.Router();
-const config = require("../config");
-const filepath = config.DATA_PATH;
-
-/**
- * Send need to collect intelligences to Server Side
- * @param {array} intelligences - Array of intelligences that need send to DIA
- */
-function sendToDIA(intelligences, callback) {
-  let headers = {};
-  if (config.DIA_SECURITY_KEY) {
-    headers[config.X_SECURITY_KEY_HEADER] = config.DIA_SECURITY_KEY;
-  }
-  let reqConfig = {
-    baseURL: config.DIA_BASE_URL,
-    url: config.DIA_ADD_INTELLIGENCES_PATH,
-    method: config.DIA_ADD_INTELLIGENCES_METHOD,
-    headers: headers,
-    data: intelligences
-  };
-
-  axios
-    .request(reqConfig)
-    .then(function(res) {
-      // successful
-      callback(res.data);
-    })
-    .catch(function(err) {
-      callback(err);
-    });
-}
-
-function saveToJSON(data) {
-  fs.access(filepath, fs.F_OK, function(err) {
-    let collectedArticles = [];
-    if (!err) {
-      collectedArticles = fs.readFileSync(filepath, "utf8");
-      collectedArticles = JSON.parse(collectedArticles);
-    }
-    collectedArticles = collectedArticles.concat(data);
-    fs.writeFileSync(filepath, JSON.stringify(collectedArticles, null, 2));
-  });
-}
-
-function intelligence(url, priority, metadata, suitableAgents, permission) {
-  if (!suitableAgents) {
-    suitableAgents = ["BROWSEREXTENSION", "SERVICE", "HEADLESSBROWSER"];
-  }
-  if (!permission) {
-    permission = "PUBLIC";
-  }
-  return {
-    soi: {
-      globalId: config.SOI_GLOBAL_ID
-    },
-    priority: priority || 100,
-    metadata: metadata,
-    suitableAgents: suitableAgents,
-    permission: permission,
-    url: url
-  };
-}
+const filepath = require("../config").DATA_PATH;
+const {sendToDIA, saveToJSON, getIntelligenceObject} = require('../utils');
 
 /* GET users listing. */
 router.post("/", function(req, res) {
@@ -82,7 +21,7 @@ router.post("/", function(req, res) {
     let $ = cheerio.load(data);
 
     /*
-    intelligence(url, priority, metadata, suitableAgents, permission) will return an intelligence object
+    getIntelligenceObject(url, priority, metadata, suitableAgents, permission) will return an intelligence object
     url: string
     priority: integer
     metadata: object
@@ -92,7 +31,7 @@ router.post("/", function(req, res) {
 
     // Add you logic to process collect data
     // Following is an example of crawl articles from "http://exampleblog.munew.io/"
-    /* 
+    /*  */
     let targetBaseURL = "http://exampleblog.munew.io/";
     if (item.metadata.type == "bloglist") {
       // get all blogs url in blog list page
@@ -102,7 +41,7 @@ router.post("/", function(req, res) {
         $blog = $($blog);
         let url = new URL($blog.attr("href"), targetBaseURL).toString();
         needCollectIntelligences.push(
-          intelligence(url, 2, {
+          getIntelligenceObject(url, 2, {
             type: "blog"
           })
         );
@@ -111,7 +50,7 @@ router.post("/", function(req, res) {
       if (nextUrl) {
         nextUrl = new URL(nextUrl, targetBaseURL).toString();
         needCollectIntelligences.push(
-          intelligence(nextUrl, 1, {
+          getIntelligenceObject(nextUrl, 1, {
             type: "bloglist"
           })
         );
@@ -127,7 +66,7 @@ router.post("/", function(req, res) {
     } else {
       console.error("unknown type");
     }
-    */
+    
   }
 
   // Send intelligences back to DIA
@@ -157,14 +96,14 @@ router.post("/init", function(req, res, next) {
 
   // Add you initial intelligences
   // Following is an init intelligence for crawl articls from "http://exampleblog.munew.io/"
-  /*
+  /* */
   let targetBaseURL = "http://exampleblog.munew.io/";
   needCollectIntelligences.push(
-    intelligence(targetBaseURL, 1, {
+    getIntelligenceObject(targetBaseURL, 1, {
       type: "bloglist"
     })
   );
-  */
+  
 
   if (needCollectIntelligences.length) {
     sendToDIA(needCollectIntelligences, function(result) {
