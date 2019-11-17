@@ -82,8 +82,14 @@ router.post("/", function(req, res) {
     let $ = cheerio.load(data);
 
     /*
-    fucntion intelligence(url, priority, metadata, suitableAgents, permission) will return an intelligence object
+    intelligence(url, priority, metadata, suitableAgents, permission) will return an intelligence object
+    url: string
+    priority: integer
+    metadata: object
+    suiteableAgents: array. A sub array of ["BROWSEREXTENSION", "SERVICE", "HEADLESSBROWSER"], default is ["BROWSEREXTENSION", "SERVICE", "HEADLESSBROWSER"]
+    permission: string. 'PUBLIC' OR 'PRIVATE', default is 'PUBLIC'
     */
+
     // Add you logic to process collect data
     // Following is an example of crawl articles from "http://exampleblog.munew.io/"
     /* 
@@ -164,7 +170,7 @@ router.post("/init", function(req, res, next) {
     sendToDIA(needCollectIntelligences, function(result) {
       res.json(result);
     });
-  }else{
+  } else {
     // No intelligences created
     res.json([]);
   }
