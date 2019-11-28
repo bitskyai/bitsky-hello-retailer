@@ -1,6 +1,12 @@
 /**
  * Created by Shaoke Xu on 4/29/18.
  */
+
+// =================================================
+// WARNING: This function must be called in the top
+// =================================================
+const { addNodeModuleFromConfigJSON } = require('./utils/nodeModules');
+addNodeModuleFromConfigJSON();
 const enableDestroy = require("server-destroy");
 const config = require("./config");
 const createApp = require("./app");
