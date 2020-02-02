@@ -1,6 +1,6 @@
 const axios = require("axios");
-const fs = require("fs");
-const config = require("../config");
+const fs = require("fs-extra");
+const config = require("../utils/config");
 const defaultFilePath = config.DATA_PATH;
 /**
  * Send need to collect intelligences to Server Side
@@ -12,7 +12,7 @@ function sendToDIA(intelligences, callback) {
     headers[config.X_SECURITY_KEY_HEADER] = config.DIA_SECURITY_KEY;
   }
   let reqConfig = {
-    baseURL: config.DIA_BASE_URL,
+    baseURL: config.MUNEW_BASE_URL,
     url: config.DIA_ADD_INTELLIGENCES_PATH,
     method: config.DIA_ADD_INTELLIGENCES_METHOD,
     headers: headers,
@@ -23,15 +23,14 @@ function sendToDIA(intelligences, callback) {
     .request(reqConfig)
     .then(function(res) {
       // successful
-      callback(res.data);
+      callback(res.data, null);
     })
     .catch(function(err) {
-      callback(err);
+      callback(null, err);
     });
 }
 
 function saveToJSON(data, filepath) {
-  // 
   if(!filepath){
     filepath = defaultFilePath;
   }
@@ -42,6 +41,8 @@ function saveToJSON(data, filepath) {
       collectedArticles = JSON.parse(collectedArticles);
     }
     collectedArticles = collectedArticles.concat(data);
+    // makre sure file exist
+    fs.ensureFileSync(filepath);
     fs.writeFileSync(filepath, JSON.stringify(collectedArticles, null, 2));
   });
 }
@@ -55,7 +56,7 @@ function getIntelligenceObject(url, priority, metadata, suitableAgents, permissi
   }
   return {
     soi: {
-      globalId: config.SOI_GLOBAL_ID
+      globalId: config.GLOBAL_ID
     },
     priority: priority || 100,
     metadata: metadata,

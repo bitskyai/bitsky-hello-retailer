@@ -1,12 +1,48 @@
 const router = require("express").Router();
 const cheerio = require("cheerio");
 const fs = require("fs");
-const filepath = require("../config").DATA_PATH;
-const {sendToDIA, saveToJSON, getIntelligenceObject} = require('../utils');
+const filepath = require("../utils/config").DATA_PATH;
+// Munew Server API
+const {sendToDIA, saveToJSON, getIntelligenceObject} = require('./munewAPI');
 
-/* GET users listing. */
+// To initial this Analyst Service, you need to send your first intelligences that need to collect to Munew
+router.get("/init", function(req, res, next) {
+  fs.access(filepath, fs.F_OK, function(err) {
+    if (!err) {
+      fs.unlinkSync(filepath);
+    }
+  });
+  let needCollectIntelligences = [];
+  
+  //==========================================================================================
+  // Add you initial intelligences logic
+  // Following is an init intelligence for crawl articls from "http://exampleblog.munew.io/"
+  let targetBaseURL = "http://exampleblog.munew.io/";
+  needCollectIntelligences.push(
+    getIntelligenceObject(targetBaseURL, 1, {
+      type: "bloglist"
+    })
+  );
+  //==========================================================================================
+
+  if (needCollectIntelligences.length) {
+    sendToDIA(needCollectIntelligences, function(data, error) {
+      if(error){
+        console.log(error);
+        res.status(400).end();
+      }else{
+        res.json(data);
+      }
+      res.status(200).end();
+    });
+  } else {
+    // No intelligences created
+    res.status(204).end();
+  }
+});
+
+// Process Agent collected Intelligences
 router.post("/", function(req, res) {
-  // Agent collected Intelligences
   let collectedIntelligences = req.body;
   // Intelligences that need collected by Agent
   let needCollectIntelligences = [];
@@ -22,13 +58,14 @@ router.post("/", function(req, res) {
 
     /*
     getIntelligenceObject(url, priority, metadata, suitableAgents, permission) will return an intelligence object
-    url: string
-    priority: integer
-    metadata: object
-    suiteableAgents: array. A sub array of ["BROWSEREXTENSION", "SERVICE", "HEADLESSBROWSER"], default is ["BROWSEREXTENSION", "SERVICE", "HEADLESSBROWSER"]
-    permission: string. 'PUBLIC' OR 'PRIVATE', default is 'PUBLIC'
+      url: string
+      priority: integer
+      metadata: object
+      suiteableAgents: array. A sub array of ["BROWSEREXTENSION", "SERVICE", "HEADLESSBROWSER"], default is ["BROWSEREXTENSION", "SERVICE", "HEADLESSBROWSER"]
+      permission: string. 'PUBLIC' OR 'PRIVATE', default is 'PUBLIC'
     */
 
+    //==========================================================================================
     // Add you logic to process collect data
     // Following is an example of crawl articles from "http://exampleblog.munew.io/"
     /*  */
@@ -66,13 +103,19 @@ router.post("/", function(req, res) {
     } else {
       console.error("unknown type");
     }
-    
   }
+  //==========================================================================================
 
+
+  //------------------------------------------------------------------------------------------
   // Send intelligences back to DIA
   if (needCollectIntelligences.length) {
-    sendToDIA(needCollectIntelligences, function(result) {
-      console.log("needCollectIntelligences result: ", result);
+    sendToDIA(needCollectIntelligences, function(data, error) {
+      if(error){
+        console.error("sendToDIA fail. Error: ", error);
+      }else{
+        console.log("sendToDIA successful. Data: ", data);
+      }
     });
   }
 
@@ -83,36 +126,6 @@ router.post("/", function(req, res) {
 
   // response back 200
   res.status(200).end();
-});
-
-router.post("/init", function(req, res, next) {
-  fs.access(filepath, fs.F_OK, function(err) {
-    if (!err) {
-      fs.unlinkSync(filepath);
-    }
-  });
-
-  let needCollectIntelligences = [];
-
-  // Add you initial intelligences
-  // Following is an init intelligence for crawl articls from "http://exampleblog.munew.io/"
-  /* */
-  let targetBaseURL = "http://exampleblog.munew.io/";
-  needCollectIntelligences.push(
-    getIntelligenceObject(targetBaseURL, 1, {
-      type: "bloglist"
-    })
-  );
-  
-
-  if (needCollectIntelligences.length) {
-    sendToDIA(needCollectIntelligences, function(result) {
-      res.json(result);
-    });
-  } else {
-    // No intelligences created
-    res.json([]);
-  }
 });
 
 module.exports = router;

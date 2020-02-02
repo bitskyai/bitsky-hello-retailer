@@ -8,7 +8,7 @@
 const { addNodeModuleFromConfigJSON } = require('./utils/nodeModules');
 addNodeModuleFromConfigJSON();
 const enableDestroy = require("server-destroy");
-const config = require("./config");
+const config = require("./utils/config");
 const createApp = require("./app");
 
 async function startServer() {
