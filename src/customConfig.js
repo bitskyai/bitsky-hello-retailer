@@ -1,6 +1,7 @@
 const path = require("path");
 const homedir = require('os').homedir();
-const dataPath = path.join(homedir, "./Downloads/muew_default_as_data.json");
+// by default, it will save collect data as JSON format in your `Downloads` folder
+const dataPath = path.join(homedir, "./Downloads/munewCollectedData.json");
 
 const CUSTOM_CONFIG = {
   // You must set this value. Following is the steps to get `GLOBAL_ID`
