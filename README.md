@@ -1,2 +1,2 @@
-# dia-soi-node-boilerplate
+# dia-soi-boilerplate-node
 Node.js SOI Boilerplate
