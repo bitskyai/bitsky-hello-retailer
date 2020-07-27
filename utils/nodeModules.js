@@ -108,7 +108,8 @@ function removePath(path) {
 
 function addNodeModuleFromConfigJSON(){
     try{
-        const configJSON = require('./additionalNodeModules.json');
+        const additionalNodeModulesJSON = process.env.ADDITIONAL_NODE_MODULES || './additionalNodeModules.json';
+        const configJSON = require(additionalNodeModulesJSON);
         const additionalNodeModules = configJSON&&configJSON.additionalNodePath|| [];
         let pathArr = [];
         if(additionalNodeModules instanceof Array){
