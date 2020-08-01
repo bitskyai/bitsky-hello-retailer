@@ -29,6 +29,7 @@ const Papa = require('papaparse');
 // https://www.npmjs.com/package/txt-file-to-json
 const txtToJSON = require("txt-file-to-json");
 
+// You MUST change to your value
 const settings = {
   GLOBAL_ID: "c29pOjoxNTkyNzk1NTI1NjAzOjpmZmFkNTI4Zi02NzYyLTRlNmQtOGQyYS05Njk1NzM0YjhkM2Q=",
   MUNEW_BASE_URL: "http://localhost:9099",

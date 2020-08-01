@@ -1,13 +1,13 @@
 {
   "name": "munew-default-retailer",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "main": "./src/index.js",
   "scripts": {
     "start": "node ./index.js",
     "debug": "ndb ./index.js"
   },
   "dependencies": {
-    "bitspider-retailer-sdk": "0.4.1"
+    "bitspider-retailer-sdk": "0.5.0"
   },
   "devDependencies": {
     "ndb": "^1.1.4"
