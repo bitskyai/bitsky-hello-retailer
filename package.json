@@ -1,5 +1,5 @@
 {
-  "name": "munew-default-retailer",
+  "name": "bitsky-hello-retailer",
   "version": "0.7.0",
   "main": "./src/index.js",
   "scripts": {
