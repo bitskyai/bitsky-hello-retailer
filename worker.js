@@ -1,4 +1,4 @@
-const baseRetailerService = require("bitspider-retailer-sdk");
+const baseRetailerService = require("@bitskyai/retailer-sdk");
 //--------------------------------------------------------------
 // Following are some useful packages you maybe need when you are parse data
 // All the list packages are already pre-installed
@@ -36,7 +36,7 @@ const settings = {
 };
 
 // To show your how to use metadata.script
-// For more infomation, please take a look of bitspider-retailer-sdk API doc, download from https://github.com/munew/bitspider-retailer-sdk/releases.
+// For more infomation, please take a look of @bitskyai/retailer-sdk API doc, download from https://github.com/munew/@bitskyai/retailer-sdk/releases.
 async function additionalWait() {
   await $$page.waitFor(5 * 1000);
 }

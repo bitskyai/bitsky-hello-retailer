@@ -2,8 +2,8 @@
 // Add additional node_modules. DON'T change and remove this. 
 const { addNodeModuleFromConfigJSON } = require("./utils/nodeModules");
 addNodeModuleFromConfigJSON();
-// Add bitspider-retailer-sdk - https://www.npmjs.com/package/bitspider-retailer-sdk
-const baseRetailerService = require("bitspider-retailer-sdk");
+// Add @bitskyai/retailer-sdk - https://www.npmjs.com/package/@bitskyai/retailer-sdk
+const baseRetailerService = require("@bitskyai/retailer-sdk");
 const path = require("path");
 //------------------------------------------------------------------------------------------
 
@@ -15,7 +15,7 @@ module.exports = {
   startServer: async function startServer() {
     //--------------------------------------------
     // Normally you don't need to change the code inside try/catch, but you still can change it if you need
-    // Based on baseRetailerService APIs(https://www.npmjs.com/package/bitspider-retailer-sdk) to change
+    // Based on baseRetailerService APIs(https://www.npmjs.com/package/@bitskyai/retailer-sdk) to change
     try {
       // environment variable will overwrite settings
       const mergedSettings = _.merge({
@@ -40,7 +40,7 @@ module.exports = {
   stopServer: async function stopServer() {
     //--------------------------------------------
     // Normally you don't need to change the code inside try/catch, but you still can change it if you need
-    // Based on baseRetailerService APIs(https://www.npmjs.com/package/bitspider-retailer-sdk) to change
+    // Based on baseRetailerService APIs(https://www.npmjs.com/package/@bitskyai/retailer-sdk) to change
     try {
       await baseRetailerService.stop();
       baseRetailerService = undefined;
