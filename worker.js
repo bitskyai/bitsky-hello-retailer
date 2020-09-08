@@ -32,11 +32,11 @@ const txtToJSON = require("txt-file-to-json");
 // You MUST change to your value
 const settings = {
   GLOBAL_ID: "c29pOjoxNTkyNzk1NTI1NjAzOjpmZmFkNTI4Zi02NzYyLTRlNmQtOGQyYS05Njk1NzM0YjhkM2Q=",
-  MUNEW_BASE_URL: "http://localhost:9099",
+  BITSKY_BASE_URL: "http://localhost:9099",
 };
 
 // To show your how to use metadata.script
-// For more infomation, please take a look of @bitskyai/retailer-sdk API doc, download from https://github.com/munew/@bitskyai/retailer-sdk/releases.
+// For more infomation, please take a look of @bitskyai/retailer-sdk API doc, download from https://github.com/bitskyai/bitsky-retailer-sdk/releases.
 async function additionalWait() {
   await $$page.waitFor(5 * 1000);
 }
@@ -46,7 +46,7 @@ const trigger = async function trigger({ req, res }){
   return {
     tasks: [
       baseRetailerService.generateTask({
-        url: "http://exampleblog.munew.io/",
+        url: "http://exampleblog.bitsky.ai/",
         priority: 1,
         metadata: { type: "bloglist", script: additionalWait.toString() },
       }),
@@ -63,10 +63,10 @@ const parse = async function parse({ req, res }){
     const tasks = [];
     // Data store to disk
     const storeData = [];
-    const targetBaseURL = "http://exampleblog.munew.io/";
+    const targetBaseURL = "http://exampleblog.bitsky.ai/";
     for (let i = 0; i < body.length; i++) {
       let item = body[i];
-      // req.body - https://docs.munew.io/api/munew-engine-restful-api#request-body-array-item-schema
+      // req.body - https://docs.bitsky.ai/api/bitsky-restful-api#request-body-array-item-schema
       let data = item.dataset.data.content;
 
       // You can find how to use cheerio from https://cheerio.js.org/
