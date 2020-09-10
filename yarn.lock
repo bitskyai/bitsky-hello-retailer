@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@bitskyai/retailer-sdk@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@bitskyai/retailer-sdk/-/retailer-sdk-0.1.0.tgz#dc5fc0db32b8f1527e5371af9e48e091083a2682"
-  integrity sha512-RBU6eifVZlH1gXXZd2JLljK4e2hY+tEFj7i7Z+6sWMegsx4GReFH80c2Lf8OpLdMUDaWfPyZF1/vf64jCHKq4A==
+"@bitskyai/retailer-sdk@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@bitskyai/retailer-sdk/-/retailer-sdk-0.1.1.tgz#8d48a8b92e0b553e402d16d3c5af45de9936cec2"
+  integrity sha512-h0wv56lUmK/D7900ERog55JnT7O6PlpRkrG1xJmUWWVE5YJPusS75B+Nyktp50cdfZ87tnB3JL04bk85VRy5Kg==
   dependencies:
     axios "0.20.0"
     cheerio "1.0.0-rc.3"
