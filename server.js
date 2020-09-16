@@ -19,7 +19,7 @@ module.exports = {
     try {
       // environment variable will overwrite settings
       const mergedSettings = _.merge({
-        SERVICE_NAME: "default-retailer-service",
+        SERVICE_NAME: "hello-retailer-service",
         LOG_FILES_PATH: path.join(__dirname, "./public/log"),
         DATA_PATH: path.join(__dirname, "./public/data.json"),
       }, settings);
@@ -28,7 +28,7 @@ module.exports = {
       baseRetailerService.trigger(trigger);
       baseRetailerService.parse(parse);
       baseRetailerService.express({
-        static: path.join(__dirname, "./public"),
+        statics: path.join(__dirname, "./public"),
       });
       baseRetailerService.routers();
       await baseRetailerService.listen();

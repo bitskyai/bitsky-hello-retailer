@@ -1,13 +1,13 @@
 {
   "name": "@bitskyai/hello-retailer",
-  "version": "0.1.1",
-  "main": "./src/index.js",
+  "version": "0.1.2",
+  "main": "./index.js",
   "scripts": {
     "start": "node ./index.js",
     "debug": "ndb ./index.js"
   },
   "dependencies": {
-    "@bitskyai/retailer-sdk": "0.1.1"
+    "@bitskyai/retailer-sdk": "0.1.2"
   },
   "devDependencies": {
     "ndb": "^1.1.4"
