@@ -1,6 +1,6 @@
 {
   "name": "bitsky-hello-retailer",
-  "description": "Hello Retailer is ",
+  "description": "A retailer service to crawl blogs from https://exampleblog.bitsky.ai/",
   "keywords": [
     "web crawling",
     "web scraping",
@@ -13,38 +13,23 @@
   "logo": "https://raw.githubusercontent.com/bitskyai/bitsky-desktop-app/master/assets/icons/bitsky512.png",
   "env": {
     "BITSKY_BASE_URL": {
-      "description": "Your BitSky Application's base url. Example: https://bitsky.herokuapp.com",
+      "description": "Your BitSky application's base url. Example: https://bitskyai.herokuapp.com",
       "required": true
     },
     "GLOBAL_ID": {
-      "description": "Global ID of the headless producer you want to connect. Example: YWdlbnQ6OjE1OTMwNjYzODY5MDU6OmU3MjAwZmU5LWViZTktNDc3Zi1hMDY1LTEzYjFiOTQ3YTAyMQ==",
+      "description": "Global ID of the retailer service you want to connect. Example: 6e56474d-0c75-4125-b5a8-27b0ccf71390",
       "required": true
-    },
-    "PRODUCER_SERIAL_ID": {
-      "description": "An UUID to idenity this producer, better you keep same value for this producer. If you didn't provide then it will automatically generate one for you. Example: b7f6a100-9a35-4df3-bef9-2c1f6d8c866e",
-      "required": false
     },
     "LOG_LEVEL": {
       "description": "Winston logging level. Default is `info`, find detail from https://github.com/winstonjs/winston#logging-levels",
       "value": "info",
-      "required": false
-    },
-    "SCREENSHOT": {
-      "description": "Catch screenshot of current page",
-      "value": "false",
       "required": false
     }
   },
   "success_url": "/",
   "buildpacks": [
     {
-      "url": "https://github.com/jontewks/puppeteer-heroku-buildpack"
-    },
-    {
       "url": "https://github.com/heroku/heroku-buildpack-nodejs"
-    },
-    {
-      "url": "https://github.com/debitoor/heroku-buildpack-converter-fonts"
     }
   ]
 }
