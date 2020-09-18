@@ -31,8 +31,8 @@ const txtToJSON = require("txt-file-to-json");
 
 // You MUST change to your value
 const settings = {
-  GLOBAL_ID: "c29pOjoxNTkyNzk1NTI1NjAzOjpmZmFkNTI4Zi02NzYyLTRlNmQtOGQyYS05Njk1NzM0YjhkM2Q=",
-  BITSKY_BASE_URL: "http://localhost:9099",
+  GLOBAL_ID: process.env.GLOBAL_ID || "c29pOjoxNTkyNzk1NTI1NjAzOjpmZmFkNTI4Zi02NzYyLTRlNmQtOGQyYS05Njk1NzM0YjhkM2Q=",
+  BITSKY_BASE_URL: process.env.BITSKY_BASE_URL || "http://localhost:9099",
 };
 
 // To show your how to use metadata.script
