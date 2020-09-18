@@ -31,7 +31,7 @@ const txtToJSON = require("txt-file-to-json");
 
 // You MUST change to your value
 const settings = {
-  GLOBAL_ID: process.env.GLOBAL_ID || "c29pOjoxNTkyNzk1NTI1NjAzOjpmZmFkNTI4Zi02NzYyLTRlNmQtOGQyYS05Njk1NzM0YjhkM2Q=",
+  GLOBAL_ID: process.env.GLOBAL_ID || "6e56474d-0c75-4125-b5a8-27b0ccf71390",
   BITSKY_BASE_URL: process.env.BITSKY_BASE_URL || "http://localhost:9099",
 };
 
