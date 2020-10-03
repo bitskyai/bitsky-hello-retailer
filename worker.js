@@ -12,6 +12,9 @@ const path = require("path");
 // `cheerio`: Fast, flexible & lean implementation of core jQuery designed specifically for the server
 // https://www.npmjs.com/package/cheerio
 const cheerio = require("cheerio");
+// DOM 3 XPath 1.0 implemention and helper for JavaScript, with node.js support.
+// https://www.npmjs.com/package/xpath
+const xpath = require('xpath');
 // `lodash`: A modern JavaScript utility library delivering modularity, performance & extras
 // https://lodash.com/
 const _ = require("lodash");
@@ -116,6 +119,7 @@ const parse = async function parse({ req, res }) {
 
       // You can find how to use cheerio from https://cheerio.js.org/
       // cheerio: Fast, flexible & lean implementation of core jQuery designed specifically for the server.
+      // if you like you also can try to use `xpath`, please check https://www.npmjs.com/package/xpath
       let $ = cheerio.load(htmlString);
 
       if (task.metadata.type == "bloglist") {
@@ -127,13 +131,17 @@ const parse = async function parse({ req, res }) {
           $blog = $($blog);
           // Get blog page link, don't forget to add Base URL
           let url = new URL($blog.attr("href"), targetBaseURL).toString();
+          // you can use `logger.info`, `logger.error` for debug
+          // please check https://www.npmjs.com/package/winston for detail
           logger.info(`blog page link: ${url}`);
           // Add Task to crawl blog page
           tasks.push(
             baseRetailerService.generateTask({
               url,
+              // Set `priority` to `2`, so we can first crawl all blog list page, then crawl all blogs
               priority: 2,
               metadata: {
+                // Add `type: "blog"` to indicate this task is for crawl blog
                 type: "blog",
               },
             })
@@ -148,9 +156,12 @@ const parse = async function parse({ req, res }) {
           tasks.push(
             baseRetailerService.generateTask({
               url: nextUrl,
-              priority: 2,
+              // blog list page is highest priority
+              priority: 1,
               metadata: {
+                // indicate this task is for crawl blog list page
                 type: "bloglist",
+                // Just to show you how to execute JavaScript in the browser
                 script: additionalWait.toString(),
               },
             })
@@ -169,12 +180,15 @@ const parse = async function parse({ req, res }) {
         logger.error("unknown type");
       }
     }
+
+    // return data that need to store and tasks need to be executed
+    // Check https://apis.bitsky.ai/bitsky-retailer-sdk/global.html#ParseFunReturn for more detail
     return {
       data: storeData,
       tasks: tasks,
     };
   } catch (err) {
-    logger.log(`parse error: ${err.message}`);
+    logger.error(`parse error: ${err.message}`);
   }
 };
 
