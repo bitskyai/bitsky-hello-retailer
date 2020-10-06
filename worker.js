@@ -48,6 +48,8 @@ const logger = require('./utils/logger');
 // https://docs.bitsky.ai/how-tos/how-to-get-global-id#get-a-retailer-configuration-global-id
 const settings = {
   GLOBAL_ID: process.env.GLOBAL_ID || "6e56474d-0c75-4125-b5a8-27b0ccf71390",
+  // CONNECTOR_TYPE: "mongodb",   // Save data to mongoDB
+  // MONGODB_URL: "mongodb://localhost:27017/helloretailer", // MongoDB URL
 };
 
 // Page will wait 5 second, this is to show you how to execute JavaScript inside page
