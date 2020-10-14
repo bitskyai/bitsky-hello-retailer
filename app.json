@@ -1,0 +1,35 @@
+{
+  "name": "bitsky-hello-retailer",
+  "description": "A retailer service to crawl blogs from https://exampleblog.bitsky.ai/",
+  "keywords": [
+    "web crawling",
+    "web scraping",
+    "crawl",
+    "scrape",
+    "automation",
+    "nodejs"
+  ],
+  "website": "https://www.bitsky.ai",
+  "logo": "https://raw.githubusercontent.com/bitskyai/bitsky-desktop-app/master/assets/icons/bitsky512.png",
+  "env": {
+    "BITSKY_BASE_URL": {
+      "description": "Your BitSky application's base url. Example: https://bitskyai.herokuapp.com",
+      "required": true
+    },
+    "GLOBAL_ID": {
+      "description": "Global ID of the retailer service you want to connect. Example: 6e56474d-0c75-4125-b5a8-27b0ccf71390",
+      "required": true
+    },
+    "LOG_LEVEL": {
+      "description": "Winston logging level. Default is `info`, find detail from https://github.com/winstonjs/winston#logging-levels",
+      "value": "info",
+      "required": false
+    }
+  },
+  "success_url": "/",
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs"
+    }
+  ]
+}

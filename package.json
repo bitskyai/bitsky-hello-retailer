@@ -1,24 +1,14 @@
 {
-  "name": "munew-default-as",
-  "version": "0.2.0",
-  "private": true,
-  "main": "./src/index.js",
+  "name": "@bitskyai/hello-retailer",
+  "version": "0.4.0",
+  "main": "./index.js",
   "scripts": {
-    "start": "node ./src/index.js",
-    "debug": "ndb ./src/index.js"
+    "start": "node ./index.js",
+    "debug": "ndb ./index.js"
   },
   "dependencies": {
-    "axios": "^0.19.0",
-    "cheerio": "^1.0.0-rc.3",
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "http-errors": "^1.6.3",
-    "jade": "~1.11.0",
-    "lodash": "^4.17.15",
-    "fs-extra": "^7.0.1",
-    "morgan": "~1.9.1",
-    "server-destroy": "^1.0.1"
+    "@bitskyai/retailer-sdk": "0.3.0",
+    "xpath": "0.0.29"
   },
   "devDependencies": {
     "ndb": "^1.1.4"
