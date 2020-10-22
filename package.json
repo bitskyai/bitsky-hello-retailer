@@ -7,7 +7,7 @@
     "debug": "ndb ./index.js"
   },
   "dependencies": {
-    "@bitskyai/retailer-sdk": "0.3.0",
+    "@bitskyai/retailer-sdk": "0.3.1",
     "xpath": "0.0.29"
   },
   "devDependencies": {

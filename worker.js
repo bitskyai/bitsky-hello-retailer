@@ -44,9 +44,12 @@ const txtToJSON = require("txt-file-to-json");
 // logger.error('Hello again distributed logs', {error: err});
 const logger = require('./utils/logger');
 
-// You MUST change to correct Retailer Configuration Global ID
-// https://docs.bitsky.ai/how-tos/how-to-get-global-id#get-a-retailer-configuration-global-id
+// Check full configuration - https://apis.bitsky.ai/bitsky-retailer-sdk/global.html#Configurations
 const settings = {
+  SERVICE_NAME: "hello-retailer-service",
+  BITSKY_BASE_URL: "http://localhost:9099",
+  // You MUST change to correct Retailer Configuration Global ID
+  // https://docs.bitsky.ai/how-tos/how-to-get-global-id#get-a-retailer-configuration-global-id
   GLOBAL_ID: process.env.GLOBAL_ID || "6e56474d-0c75-4125-b5a8-27b0ccf71390",
   // CONNECTOR_TYPE: "mongodb",   // Save data to mongoDB
   // MONGODB_URL: "mongodb://localhost:27017/helloretailer", // MongoDB URL
@@ -54,7 +57,7 @@ const settings = {
 
 // Page will wait 5 second, this is to show you how to execute JavaScript inside page
 // For more infomation, please take a look of `metadata.scripts` in https://apis.bitsky.ai/bitsky-retailer-sdk/global.html#Task
-async function additionalWait() {
+async function customFunction() {
   await $$page.waitFor(5 * 1000);
 }
 
@@ -88,7 +91,7 @@ const trigger = async function trigger({ req, res }) {
         // In this example, I let page to wait 5 second, this isn't necessary, only used for show you how to execute JavaScript Code. 
         // `script` is useful to crawl single page application or you need to interact with page. And only `Headless Producer` can execute tasks have script
         // `script` is the JavaScript Code you want to execute, you need to convert your function to string. Normally you can use `functionName.toString()`
-        metadata: { type: "bloglist", script: additionalWait.toString() },
+        metadata: { type: "bloglist", script: customFunction.toString() },
       }),
     ],
   };
@@ -164,7 +167,7 @@ const parse = async function parse({ req, res }) {
                 // indicate this task is for crawl blog list page
                 type: "bloglist",
                 // Just to show you how to execute JavaScript in the browser
-                script: additionalWait.toString(),
+                script: customFunction.toString(),
               },
             })
           );

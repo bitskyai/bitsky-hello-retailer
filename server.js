@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------
-// Add additional node_modules. DON'T change and remove this. 
+// Add additional node_modules. DON'T change and remove this.
 const { addNodeModuleFromConfigJSON } = require("./utils/nodeModules");
 addNodeModuleFromConfigJSON();
 // Add @bitskyai/retailer-sdk - https://www.npmjs.com/package/@bitskyai/retailer-sdk
@@ -18,28 +18,21 @@ module.exports = {
     // Based on baseRetailerService APIs(https://www.npmjs.com/package/@bitskyai/retailer-sdk) to change
     try {
       // environment variable will overwrite settings
-      const mergedSettings = _.merge({
-        SERVICE_NAME: "hello-retailer-service",
-        LOG_FILES_PATH: path.join(__dirname, "./public/log"),
-        DATA_PATH: path.join(__dirname, "./public/data.json")
-      }, customConfig, settings);
+      const mergedSettings = _.merge(customConfig, settings);
       baseRetailerService.setConfigs(mergedSettings);
-      baseRetailerService.init();
       baseRetailerService.trigger(trigger);
       baseRetailerService.parse(parse);
-      baseRetailerService.express({
-        statics: path.join(__dirname, "./public"),
-      });
+      baseRetailerService.express();
       baseRetailerService.routers();
       await baseRetailerService.getRetailerConfiguration();
       await baseRetailerService.listen();
       baseRetailerService.logger.info(`start server successful`, {
-        configs: baseRetailerService.getConfigs()
+        configs: baseRetailerService.getConfigs(),
       });
       return baseRetailerService;
     } catch (err) {
       baseRetailerService.logger.error(`startServer fail - ${err.message}`, {
-        error: err
+        error: err,
       });
       throw err;
     }
