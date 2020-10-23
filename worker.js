@@ -47,7 +47,6 @@ const logger = require('./utils/logger');
 // Check full configuration - https://apis.bitsky.ai/bitsky-retailer-sdk/global.html#Configurations
 const settings = {
   SERVICE_NAME: "hello-retailer-service",
-  BITSKY_BASE_URL: "http://localhost:9099",
   // You MUST change to correct Retailer Configuration Global ID
   // https://docs.bitsky.ai/how-tos/how-to-get-global-id#get-a-retailer-configuration-global-id
   GLOBAL_ID: process.env.GLOBAL_ID || "6e56474d-0c75-4125-b5a8-27b0ccf71390",
